@@ -1,0 +1,30 @@
+@model IEnumerable<EauClairSalon.Models.Stylist>
+
+<h1>Stylists</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Specialty</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var stylist in Model)
+    {
+      <tr>
+        <td>@Html.ActionLink(stylist.Name, "Details", new { id = stylist.StylistId })</td>
+        <td>@stylist.Specialty</td>
+        <td>
+          @Html.ActionLink("Edit", "Edit", new { id = stylist.StylistId }) |
+          @Html.ActionLink("Delete", "Delete", new { id = stylist.StylistId })
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<div>
+    @Html.ActionLink("Create New", "Create")
+</div>

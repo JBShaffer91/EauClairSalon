@@ -1,0 +1,12 @@
+@model EauClairSalon.Models.Stylist
+
+<h1>Edit Stylist</h1>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.StylistId)
+  @Html.EditorFor(model => model.Name)
+  @Html.EditorFor(model => model.Specialty)
+
+  <input type="submit" value="Edit">
+}

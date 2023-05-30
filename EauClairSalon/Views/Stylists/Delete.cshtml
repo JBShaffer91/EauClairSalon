@@ -1,0 +1,11 @@
+@model EauClairSalon.Models.Stylist
+
+<h1>Delete Stylist</h1>
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.StylistId)
+  @Html.DisplayFor(model => model.Name)
+
+  <input type="submit" value="Delete">
+}

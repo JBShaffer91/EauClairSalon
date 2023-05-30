@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using EauClairSalon.Models;
 
 #nullable disable
 public class EauClairSalonContext : DbContext
