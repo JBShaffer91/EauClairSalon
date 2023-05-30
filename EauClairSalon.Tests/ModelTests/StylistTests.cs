@@ -1,8 +1,10 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.AspNetCore.Mvc;
+using Xunit;
 using EauClairSalon.Models;
+using EauClairSalon.Controllers;
 using System.Collections.Generic;
-
 namespace EauClairSalon.Tests.ModelTests
+
 {
   [TestClass]
   public class StylistTests

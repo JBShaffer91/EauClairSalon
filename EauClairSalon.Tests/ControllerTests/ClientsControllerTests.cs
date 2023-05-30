@@ -1,7 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using EauClairSalon.Models;
 using EauClairSalon.Controllers;
+using System.Collections.Generic;
 
 namespace EauClairSalon.Tests.ControllerTests
 {
