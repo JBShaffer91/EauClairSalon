@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 
+#nullable disable
 public class EauClairSalonContext : DbContext
 {
-    public EauClairSalonContext(DbContextOptions<EauClairSalonContext> options)
-        : base(options)
-    {
-    }
+  public EauClairSalonContext(DbContextOptions<EauClairSalonContext> options)
+    : base(options) 
+  {
+  }
 
-    public DbSet<Stylist>? Stylists { get; set; }
-    public DbSet<Client>? Clients { get; set; }
+  public DbSet<Stylist> Stylists { get; set; }
+  public DbSet<Client> Clients { get; set; }
 }
+#nullable enable
