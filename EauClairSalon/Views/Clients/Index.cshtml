@@ -1,0 +1,32 @@
+@using EauClairSalon.Models
+@model IEnumerable<Client>
+
+<h2>All Clients</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Stylist Name</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach (var client in Model)
+    {
+      <tr>
+        <td>@client.Name</td>
+        <td>@client.Stylist?.Name</td>
+        <td>
+          <a asp-action="Edit" asp-route-id="@client.ClientId" class="btn btn-secondary">Edit</a>
+        </td>
+        <td>
+          <a asp-action="Delete" asp-route-id="@client.ClientId" class="btn btn-danger">Delete</a>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<a asp-action="Create" class="btn btn-primary">Add Client</a>
