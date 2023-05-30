@@ -1,0 +1,26 @@
+@model EauClairSalon.Models.Client
+
+<h2>Edit @Model.Name's Details</h2>
+
+<form asp-action="Edit" asp-route-id="@Model.ClientId">
+  <div class="form-group">
+    <label asp-for="Name" class="control-label"></label>
+    <input asp-for="Name" class="form-control" />
+    <span asp-validation-for="Name" class="text-danger"></span>
+  </div>
+  <div class="form-group">
+    <label asp-for="StylistId" class="control-label"></label>
+    <select asp-for="StylistId" asp-items="ViewBag.StylistId" class="form-control"></select>
+  </div>
+  <div class="form-group">
+    <input type="submit" value="Edit" class="btn btn-default" />
+  </div>
+</form>
+
+<div>
+  <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+  @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

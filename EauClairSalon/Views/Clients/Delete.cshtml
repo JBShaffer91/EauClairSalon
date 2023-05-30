@@ -1,0 +1,10 @@
+@model EauClairSalon.Models.Client
+
+<h2>Are you sure you want to delete @Model.Name?</h2>
+
+<form asp-action="DeleteConfirmed" asp-route-id="@Model.ClientId">
+  <div class="form-group">
+    <input type="submit" value="Delete" class="btn btn-danger" /> |
+    <a asp-action="Index">Back to List</a>
+  </div>
+</form>
