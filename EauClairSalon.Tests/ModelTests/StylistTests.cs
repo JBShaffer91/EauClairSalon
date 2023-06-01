@@ -3,42 +3,41 @@ using Xunit;
 using EauClairSalon.Models;
 using EauClairSalon.Controllers;
 using System.Collections.Generic;
-namespace EauClairSalon.Tests.ModelTests
 
+namespace EauClairSalon.Tests.ModelTests
 {
-  [TestClass]
   public class StylistTests
   {
-    [TestMethod]
+    [Fact]
     public void StylistConstructor_CreatesInstanceOfStylist_Stylist()
     {
       Stylist newStylist = new();
-      Assert.AreEqual(typeof(Stylist), newStylist.GetType());
+      Assert.Equal(typeof(Stylist), newStylist.GetType());
     }
 
-    [TestMethod]
+    [Fact]
     public void GetName_ReturnsName_String()
     {
       string name = "Test Stylist";
       Stylist newStylist = new() { Name = name };
       string result = newStylist.Name;
-      Assert.AreEqual(name, result);
+      Assert.Equal(name, result);
     }
 
-    [TestMethod]
+    [Fact]
     public void GetSpecialty_ReturnsSpecialty_String()
     {
       string specialty = "Test Specialty";
       Stylist newStylist = new() { Specialty = specialty };
       string result = newStylist.Specialty;
-      Assert.AreEqual(specialty, result);
+      Assert.Equal(specialty, result);
     }
 
-    [TestMethod]
+    [Fact]
     public void GetClients_ReturnsClients_Collection()
     {
       Stylist newStylist = new();
-      Assert.AreEqual(typeof(HashSet<Client>), newStylist.Clients.GetType());
+      Assert.Equal(typeof(HashSet<Client>), newStylist.Clients.GetType());
     }
   }
 }

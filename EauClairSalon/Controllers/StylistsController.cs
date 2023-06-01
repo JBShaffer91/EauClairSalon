@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EauClairSalon.Models;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EauClairSalon.Controllers
 {
@@ -14,66 +15,107 @@ namespace EauClairSalon.Controllers
       _db = db;
     }
 
-    public ActionResult Index()
+    public async Task<IActionResult> Index()
     {
-      return View(_db.Stylists.ToList());
+      return View(await _db.Stylists.ToListAsync());
     }
 
-    public ActionResult Create()
+    public IActionResult Create()
     {
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Stylist stylist)
+    public async Task<IActionResult> Create(Stylist stylist)
     {
-      _db.Stylists.Add(stylist);
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if(ModelState.IsValid)
+      {
+        _db.Stylists.Add(stylist);
+        await _db.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
+      }
+
+      return View(stylist);
     }
 
-    public ActionResult Details(int id)
+    public async Task<IActionResult> Details(int id)
     {
-      var thisStylist = _db.Stylists
+      var thisStylist = await _db.Stylists
         .Include(stylist => stylist.Clients)
-        .FirstOrDefault(stylist => stylist.StylistId == id);
-        return View(thisStylist);
+        .FirstOrDefaultAsync(stylist => stylist.StylistId == id);
+      if(thisStylist == null)
+      {
+        return NotFound();
+      }
+      return View(thisStylist);
     }
 
-    public ActionResult Edit(int id)
+    public async Task<IActionResult> Edit(int id)
     {
-      var thisStylist = _db.Stylists.FirstOrDefault(stylist => stylist.StylistId == id);
+      var thisStylist = await _db.Stylists.FindAsync(id);
+      if(thisStylist == null)
+      {
+        return NotFound();
+      }
       return View(thisStylist);
     }
 
     [HttpPost]
-    public ActionResult Edit(Stylist stylist)
+    public async Task<IActionResult> Edit(int id, Stylist stylist)
     {
-      _db.Entry(stylist).State = EntityState.Modified;
-      _db.SaveChanges();
-      return RedirectToAction("Index");
+      if(id != stylist.StylistId)
+      {
+        return NotFound();
+      }
+
+      if(ModelState.IsValid)
+      {
+        try
+        {
+          _db.Update(stylist);
+          await _db.SaveChangesAsync();
+        }
+        catch (DbUpdateConcurrencyException)
+        {
+          if (!StylistExists(stylist.StylistId))
+          {
+            return NotFound();
+          }
+          else
+          {
+            throw;
+          }
+        }
+        return RedirectToAction(nameof(Index));
+      }
+      return View(stylist);
     }
 
-    public ActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
-      var thisStylist = _db.Stylists.FirstOrDefault(stylists => stylists.StylistId == id);
+      var thisStylist = await _db.Stylists.FindAsync(id);
       if (thisStylist == null)
       {
-        return NotFound();  // Or redirect to a different action/view as you see fit
+        return NotFound();
       }
       return View(thisStylist);
     }
 
     [HttpPost, ActionName("Delete")]
-    public ActionResult DeleteConfirmed(int id)
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-      var thisStylist = _db.Stylists.FirstOrDefault(stylists => stylists.StylistId == id);
+      var thisStylist = await _db.Stylists.FindAsync(id);
       if (thisStylist != null)
       {
         _db.Stylists.Remove(thisStylist);
-        _db.SaveChanges();
+        await _db.SaveChangesAsync();
       }
-      return RedirectToAction("Index");
+      return RedirectToAction(nameof(Index));
+    }
+
+    private bool StylistExists(int id)
+    {
+      return _db.Stylists.Any(e => e.StylistId == id);
     }
   }
 }
