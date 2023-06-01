@@ -43,6 +43,7 @@ After installation, follow these steps:
     "DefaultConnection": "Server=localhost;Port=3306;database=<first_last>;uid=root;pwd=;"
   }
 }
+
 To start the application:
 
 1. Run `dotnet restore`.
