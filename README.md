@@ -36,13 +36,13 @@ After installation, follow these steps:
 2. Navigate into the `HairSalon` directory: `cd HairSalon`.
 3. Open in your preferred text editor to view the code base.
 4. Create your `appsettings.json` file in the `HairSalon` directory. Here is a sample setup:
-
-```json
+```
 {
   "ConnectionStrings": {
     "DefaultConnection": "Server=localhost;Port=3306;database=<first_last>;uid=root;pwd=;"
   }
 }
+```
 
 To start the application:
 
