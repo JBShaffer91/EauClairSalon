@@ -15,11 +15,5 @@ public class EauClairSalonContext : DbContext
 
   public DbSet<Stylist> Stylists { get; set; }
   public DbSet<Client> Clients { get; set; }
-
-  protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-  {
-    optionsBuilder.UseMySql("server=localhost;user=root;password=;database=eauclairsalon", 
-                            ServerVersion.AutoDetect("server=localhost;user=root;password=;database=eauclairsalon"));
-  }
 }
 #nullable enable

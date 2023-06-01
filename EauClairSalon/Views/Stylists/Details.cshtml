@@ -1,11 +1,32 @@
 @model EauClairSalon.Models.Stylist
 
-<h1>Delete Stylist</h1>
-
-@using (Html.BeginForm())
+@if (Model != null)
 {
-  @Html.HiddenFor(model => model.StylistId)
-  @Html.DisplayFor(model => model.Name)
+    <h1>Stylist Details</h1>
 
-  <input type="submit" value="Delete">
+    <div>
+        <h2>@Model.Name</h2>
+        <p>Specialty: @Model.Specialty</p>
+
+        @Html.ActionLink("Edit", "Edit", new { id = Model.StylistId }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.StylistId })
+    </div>
+
+    <h3>Clients</h3>
+    @if (Model.Clients != null)
+    {
+        @foreach (var client in Model.Clients)
+        {
+            <p>@Html.ActionLink(client.Name, "Details", "Clients", new { id = client.ClientId }, null)</p>
+        }
+    }
+    else
+    {
+        <p>No clients associated with this stylist.</p>
+    }
+}
+else
+{
+    <h1>Stylist Not Found</h1>
+    <p>The stylist you're looking for was not found.</p>
 }
