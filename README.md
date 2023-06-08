@@ -27,7 +27,7 @@ This is a MVC web application built for Eau Claire's Salon to help manage stylis
 
 To run this project, you must have the following installed:
 
-* [.NET 5 SDK](https://dotnet.microsoft.com/download/dotnet/5.0)
+* [.NET 7 SDK](https://dotnet.microsoft.com/download/dotnet/7.0)
 * [MySQL](https://dev.mysql.com/downloads/file/?id=484914)
 
 After installation, follow these steps:
