@@ -13,7 +13,7 @@ This is a MVC web application built for Eau Claire's Salon to help manage stylis
 
 ## Technologies Used
 
-- .NET 6.0 SDK
+- .NET 7.0 SDK
 - C#
 - ASP.NET Core MVC
 - Entity Framework Core
@@ -44,12 +44,21 @@ After installation, follow these steps:
 }
 ```
 
+Setting up the Database:
+
+1. Open your MySQL Workbench and log in to your account
+2. Navigate to Administration - Data Import/Restore
+3. Select Import from Self-Contained File, then navigate to `eauclairsalon.sql` in the project directory
+4. Under Default Schema to be Imported To, select the New button
+5. Enter `eauclairsalon` as the name of the schema and click Ok
+6. Click Start Import at the bottom right
+
 To start the application:
 
 1. Run `dotnet restore`.
 2. Run `dotnet build`.
 3. Run `dotnet run`.
-4. Open a web browser and go to `http://localhost:5000`.
+4. Open a web browser and go to `http://localhost:5031`.
 
 ## Known Bugs
 
