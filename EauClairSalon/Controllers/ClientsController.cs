@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using EauClairSalon.Models;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace EauClairSalon.Controllers
 {
@@ -29,16 +30,24 @@ namespace EauClairSalon.Controllers
 
     public ActionResult Create(int stylistId)
     {
-      ViewBag.StylistId = stylistId;
+      ViewBag.StylistId = new SelectList(_db.Stylists, "StylistId", "Name");
       return View();
     }
 
     [HttpPost]
-    public ActionResult Create(Client client)
+    public IActionResult Create(Client client)
     {
-      _db.Clients.Add(client);
-      _db.SaveChanges();
-      return RedirectToAction("Details", "Stylists", new { id = client.StylistId });
+      if (ModelState.IsValid)
+      {
+        _db.Clients.Add(client);
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+      else
+      {
+        ViewBag.StylistId = new SelectList(_db.Stylists, "StylistId", "Name");
+        return View(client);
+      }
     }
 
     public ActionResult Edit(int id)
@@ -46,7 +55,7 @@ namespace EauClairSalon.Controllers
       var thisClient = _db.Clients.FirstOrDefault(client => client.ClientId == id);
       if (thisClient != null)
       {
-        ViewBag.StylistId = thisClient.StylistId;
+        ViewBag.StylistId = new SelectList(_db.Stylists, "StylistId", "Name");
         return View(thisClient);
       }
       else
@@ -58,9 +67,23 @@ namespace EauClairSalon.Controllers
     [HttpPost]
     public ActionResult Edit(Client client)
     {
-      _db.Entry(client).State = EntityState.Modified;
-      _db.SaveChanges();
-      return RedirectToAction("Details", "Stylists", new { id = client.StylistId });
+      try
+      {
+        var originalClient = _db.Clients.Find(client.ClientId);
+    
+        if (originalClient == null)
+        {
+          return NotFound();
+        }
+    
+        _db.Entry(originalClient).CurrentValues.SetValues(client);
+       _db.SaveChanges();
+        return RedirectToAction("Details", "Stylists", new { id = client.StylistId });
+      }
+      catch (DbUpdateConcurrencyException)
+      {
+        return View("Error");
+      }
     }
 
     public ActionResult Delete(int id)
@@ -69,7 +92,7 @@ namespace EauClairSalon.Controllers
       return View(thisClient);
     }
 
-    [HttpPost, ActionName("Delete")]
+    [HttpPost, ActionName("Delete"), ValidateAntiForgeryToken]
     public ActionResult DeleteConfirmed(int id)
     {
       var thisClient = _db.Clients.FirstOrDefault(client => client.ClientId == id);

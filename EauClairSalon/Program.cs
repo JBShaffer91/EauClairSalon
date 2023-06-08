@@ -35,4 +35,9 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapControllerRoute(
+    name: "deleteConfirmed",
+    pattern: "Clients/DeleteConfirmed/{clientId}",
+    defaults: new { controller = "Clients", action = "DeleteConfirmed" });
+    
 app.Run();
